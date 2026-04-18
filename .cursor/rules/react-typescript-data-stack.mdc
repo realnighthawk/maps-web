@@ -1,0 +1,50 @@
+---
+description: React+TS apps — Zustand, TanStack Query, Zod only
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# State, data, and validation stack
+
+When editing TypeScript or TSX in this project, follow these library choices. Do not introduce alternatives without an explicit project decision.
+
+## State management — Zustand only
+
+- Use **Zustand** for client/UI/global state stores.
+- Do **not** add Redux, MobX, Jotai, Recoil, XState for app state, or use React Context as a primary global state layer.
+- Local `useState` / `useReducer` is fine for component-local UI.
+
+```typescript
+// ✅ GOOD — global or shared client state
+import { create } from "zustand";
+
+// ❌ BAD — new global state library or context-as-store for app state
+```
+
+## Async / server state — TanStack React Query only
+
+- Use **@tanstack/react-query** (`useQuery`, `useMutation`, `useInfiniteQuery`, `QueryClient`, etc.) for fetching, caching, mutations, and derived async hooks that talk to APIs.
+- Do **not** add SWR, RTK Query, Apollo Client, or ad-hoc `useEffect` + `fetch` patterns for the same responsibilities when a query/mutation fits.
+
+```typescript
+// ✅ GOOD
+import { useQuery, useMutation } from "@tanstack/react-query";
+
+// ❌ BAD — parallel data-fetching abstractions or one-off effect chains for server state
+```
+
+## Config and boundaries — Zod only
+
+- Use **Zod** for runtime validation: env/config parsing, API response/input schemas, form validation when a schema is shared, and safe parsing at boundaries.
+- Prefer `z.infer<typeof Schema>` for types derived from schemas.
+- Do **not** add Yup, Joi, io-ts, Valibot, or duplicate validation stacks for the same role.
+
+```typescript
+// ✅ GOOD
+import { z } from "zod";
+
+const ConfigSchema = z.object({ apiUrl: z.string().url() });
+// ❌ BAD — another runtime schema library for the same purpose
+```
+
+Keep rules aligned: Zustand for client state, React Query for server/async data, Zod for validated shapes and config.
