@@ -1,6 +1,7 @@
 import { isApiErrorResponse } from './contract/errors'
+import { getApiV1Base } from '../config/mapsEngine'
 
-const BASE_URL = '/api/v1'
+const BASE_URL = getApiV1Base()
 
 export class ApiError extends Error {
   constructor(

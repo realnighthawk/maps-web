@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useFleetStore } from '../stores/fleetStore'
 import { useAppStore } from '../stores/appStore'
 import type { VehicleStatus } from '../api/types'
+import { getFleetLiveWebSocketUrl } from '../config/mapsEngine'
 
 /** maps-engine `FleetHub.Broadcast` event types that should trigger a fleet refetch. */
 const ENGINE_FLEET_EVENT_TYPES = new Set([
@@ -48,9 +49,7 @@ export function useFleetWebSocket(enabled: boolean) {
 
     const connect = () => {
       if (stopped) return
-      const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-      const host = window.location.host
-      const url = `${proto}//${host}/api/v1/fleet/live`
+      const url = getFleetLiveWebSocketUrl()
 
       try {
         const ws = new WebSocket(url)

@@ -5,8 +5,10 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const mapsEngine =
     env.MAPS_ENGINE_PROXY_TARGET?.trim() || 'http://127.0.0.1:8080'
+  const base = env.VITE_BASE_PATH?.trim() || '/'
 
   return {
+    base,
     plugins: [react()],
     server: {
       proxy: {
