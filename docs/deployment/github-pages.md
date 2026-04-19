@@ -11,7 +11,7 @@ This app is a static Vite + React SPA. GitHub Pages serves the built assets from
    - **Secrets:** add `VITE_GOOGLE_MAPS_API_KEY` (Google Maps JavaScript API key; embedded in the client bundle at build time).
    - **Variables:**
      - `VITE_MAPS_ENGINE_ORIGIN` — public origin of the API, **no path** (example: `https://maps-api.nighthawklabs.org`).
-     - `VITE_BASE_PATH` — optional. Vite asset base path. If unset, the workflow defaults to `/<repository-name>/`, which matches a standard **project** GitHub Pages URL (`https://<owner>.github.io/<repo>/`). Use `/` if you use a **user/org site** or a **custom domain** at the site root.
+     - `VITE_BASE_PATH` — optional. Only set this if you need to override the default. On **GitHub Actions**, `vite.config` infers `/<repo>/` from `GITHUB_REPOSITORY` so assets load under `https://<owner>.github.io/<repo>/assets/`. Set `VITE_BASE_PATH=/` for a **custom domain** (or user/org site) served at the **domain root**. Do **not** set `VITE_BASE_PATH=/` for a normal **project** site (`…github.io/<repo>/`) or JS/CSS will 404 under `/assets/`.
 
 3. **Backend CORS** — the browser calls the API on a **different origin** than GitHub Pages. `maps-engine` must allow your Pages origin in CORS (and WebSocket origin policy if applicable), or requests will fail.
 

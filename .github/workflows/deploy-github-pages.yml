@@ -26,8 +26,8 @@ jobs:
       - name: Build
         env:
           VITE_MAPS_ENGINE_ORIGIN: ${{ vars.VITE_MAPS_ENGINE_ORIGIN }}
-          # GitHub project site default: https://<owner>.github.io/<repo>/
-          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || format('/{0}/', github.event.repository.name) }}
+          # Optional override. If unset, vite.config uses GITHUB_REPOSITORY → /maps-web/ etc.
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH }}
           VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
         run: npm run build
       - name: SPA fallback (client-side routes on refresh)
