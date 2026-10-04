@@ -1,0 +1,82 @@
+name: AutoTelemetry
+options:
+  bundleIdPrefix: org.nighthawklabs
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_TEAM: D9B866T935
+    CODE_SIGN_STYLE: Automatic
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+packages:
+  Clerk:
+    url: https://github.com/clerk/clerk-ios
+    from: 1.5.8
+targets:
+  AutoTelemetry:
+    type: application
+    platform: iOS
+    sources: [AutoTelemetry]
+    dependencies:
+      - package: Clerk
+        product: ClerkKit
+    info:
+      path: AutoTelemetry/Resources/Info.plist
+      properties:
+        # Same values as the Android build (ROUTER_BASE_URL / CLERK_PUBLISHABLE_KEY). The publishable key is public by design.
+        UIBackgroundModes: [location, bluetooth-central]
+        # CarPlay scene; the phone window is SwiftUI's own. CarPlay needs its entitlement (see CarPlay/CarPlay.entitlements).
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true
+          UISceneConfigurations:
+            CPTemplateApplicationSceneSessionRoleApplication:
+              - UISceneClassName: CPTemplateApplicationScene
+                UISceneConfigurationName: CarPlay
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).CarPlaySceneDelegate
+        RouterBaseURL: https://harness-router.nighthawklabs.org
+        ClerkPublishableKey: pk_test_cHJpbWFyeS1qYXktMjEuY2xlcmsuYWNjb3VudHMuZGV2JA==
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.nighthawklabs.telemetry
+        # Simulator only: Apple has to grant the CarPlay entitlement to the team before a device build can carry it.
+        "CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]": AutoTelemetry/CarPlay/CarPlay.entitlements
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_CFBundleDisplayName: AutoTelemetry
+        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Shows you on the map, plans routes from where you are and records where each drive goes.
+        INFOPLIST_KEY_NSMotionUsageDescription: Records how the car moves (braking, cornering, air pressure) with each drive.
+        INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription: Connects to your OBD adapter to read live data from your car.
+  AutoTelemetryTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [AutoTelemetryTests]
+    dependencies:
+      - target: AutoTelemetry
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/AutoTelemetry.app/AutoTelemetry"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+  AutoTelemetryUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [AutoTelemetryUITests]
+    dependencies:
+      - target: AutoTelemetry
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  AutoTelemetry:
+    build:
+      targets:
+        AutoTelemetry: all
+    test:
+      targets: [AutoTelemetryTests, AutoTelemetryUITests]

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- CarPlay "Driving Task" category. Apple must grant this to your team before it can go in a device build:
+	     https://developer.apple.com/contact/carplay/ -->
+	<key>com.apple.developer.carplay-driving-task</key>
+	<true/>
+</dict>
+</plist>

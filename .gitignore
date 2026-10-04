@@ -12,10 +12,15 @@ dist
 dist-ssr
 *.local
 
-# Environment variables
+# Environment variables (.env.example stays tracked)
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+
+# Test, type-check and browser-automation output
+coverage
+*.tsbuildinfo
+.playwright-mcp
 
 # Editor folders and files
 .vscode/*

@@ -26,6 +26,9 @@ jobs:
       - name: Build
         env:
           VITE_MAPS_ENGINE_ORIGIN: ${{ vars.VITE_MAPS_ENGINE_ORIGIN }}
+          # Router mode: sign in with Clerk and read your own drives through the router (see docs/deployment).
+          VITE_ROUTER_ORIGIN: ${{ vars.VITE_ROUTER_ORIGIN }}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ vars.VITE_CLERK_PUBLISHABLE_KEY }}
           # Optional override. If unset, vite.config uses GITHUB_REPOSITORY → /maps-web/ etc.
           VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH }}
           VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}

@@ -18,6 +18,8 @@ export default defineConfig(({ mode }) => {
   const mapsEngine =
     env.MAPS_ENGINE_PROXY_TARGET?.trim() || 'http://127.0.0.1:8080'
   const base = resolveBase(env)
+  // Dev only: act as this user toward a port-forwarded tenant maps-engine, which trusts the router's header.
+  const verifiedUser = env.MAPS_ENGINE_VERIFIED_USER?.trim()
 
   return {
     base,
@@ -28,6 +30,7 @@ export default defineConfig(({ mode }) => {
           target: mapsEngine,
           changeOrigin: true,
           ws: true,
+          headers: verifiedUser ? { 'X-Nighthawk-Verified-User': verifiedUser } : undefined,
         },
       },
     },

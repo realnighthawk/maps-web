@@ -6,6 +6,7 @@ import { FleetQueryBootstrap } from './components/fleet/FleetQueryBootstrap'
 import { FleetView } from './components/fleet/FleetView'
 import { VehicleDetailSheet } from './components/fleet/VehicleDetailSheet'
 import { TripsView } from './components/trips/TripsView'
+import { DrivesView } from './components/drives/DrivesView'
 import { SettingsView } from './components/settings/SettingsView'
 import { BottomNav } from './components/shared/BottomNav'
 import { ErrorBanner } from './components/shared/ErrorBanner'
@@ -16,6 +17,7 @@ import {
   RouteUrlSync,
   RouteUrlWriter,
 } from './components/shell/RouteSync'
+import { isRouterMode } from './config/mapsEngine'
 import { useDarkClassSync } from './hooks/useTheme'
 import { useFleetWebSocket } from './hooks/useWebSocket'
 import { useAppStore } from './stores/appStore'
@@ -24,7 +26,8 @@ import { useRouteStore } from './stores/routeStore'
 
 export default function App() {
   useDarkClassSync()
-  useFleetWebSocket(true)
+  // A browser WebSocket can't send an Authorization header, so the live fleet stream is for direct-engine use only.
+  useFleetWebSocket(!isRouterMode())
 
   const activeTab = useAppStore((s) => s.activeTab)
   const plan = useRouteStore((s) => s.plan)
@@ -62,6 +65,7 @@ export default function App() {
                 )}
                 {activeTab === 'fleet' && <FleetView />}
                 {activeTab === 'trips' && <TripsView />}
+                {activeTab === 'drives' && <DrivesView />}
                 {activeTab === 'settings' && <SettingsView />}
               </div>
               {activeTab === 'route' && plan && (

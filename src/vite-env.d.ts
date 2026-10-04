@@ -10,6 +10,14 @@ interface ImportMetaEnv {
    */
   readonly VITE_MAPS_ENGINE_ORIGIN?: string
   /**
+   * The shared router's public origin (no path). With it the app signs in with Clerk and calls the user's own
+   * maps-engine through `/maps/api/v1`. Needs VITE_CLERK_PUBLISHABLE_KEY, and this site's origin in the router's
+   * ROUTER_ALLOWED_ORIGINS.
+   */
+  readonly VITE_ROUTER_ORIGIN?: string
+  /** Clerk publishable key (public by design). Required when VITE_ROUTER_ORIGIN is set. */
+  readonly VITE_CLERK_PUBLISHABLE_KEY?: string
+  /**
    * Vite `base` for GitHub project Pages (`/repo-name/`). Defaults to `/` in vite.config.
    */
   readonly VITE_BASE_PATH?: string

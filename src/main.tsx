@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
+import { AuthGate } from './auth/AuthGate'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,9 +21,11 @@ const routerBasename =
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter basename={routerBasename}>
-        <App />
-      </BrowserRouter>
+      <AuthGate>
+        <BrowserRouter basename={routerBasename}>
+          <App />
+        </BrowserRouter>
+      </AuthGate>
     </QueryClientProvider>
   </StrictMode>,
 )

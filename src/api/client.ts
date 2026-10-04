@@ -1,5 +1,6 @@
 import { isApiErrorResponse } from './contract/errors'
 import { getApiV1Base } from '../config/mapsEngine'
+import { getAuthToken } from '../auth/token'
 
 const BASE_URL = getApiV1Base()
 
@@ -16,9 +17,11 @@ export class ApiError extends Error {
 }
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
+  const token = await getAuthToken()
   const response = await fetch(`${BASE_URL}${path}`, {
     headers: {
       'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options?.headers,
     },
     ...options,

@@ -4,6 +4,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'route', label: 'Route' },
   { id: 'fleet', label: 'Fleet' },
   { id: 'trips', label: 'Trips' },
+  { id: 'drives', label: 'Drives' },
   { id: 'settings', label: 'Settings' },
 ]
 

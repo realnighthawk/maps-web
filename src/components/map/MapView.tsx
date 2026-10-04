@@ -11,6 +11,7 @@ import { RoutePolyline } from './RoutePolyline'
 import { RouteStopsMarkers } from './RouteStopsMarkers'
 import { ChargerMarker } from './ChargerMarker'
 import { FleetVehicleMarkers } from './FleetVehicleMarkers'
+import { DriveTrail } from './DriveTrail'
 
 const SAN_JOSE: google.maps.LatLngLiteral = { lat: 37.3382, lng: -121.8863 }
 
@@ -53,6 +54,7 @@ export function MapView({ overlay }: MapViewProps) {
           <MapBindings />
           {activeTab === 'route' ? <MapRouteClickHandler /> : null}
           <RoutePolyline />
+          {activeTab === 'drives' ? <DriveTrail /> : null}
           {activeTab === 'fleet' ? (
             <FleetVehicleMarkers />
           ) : (
