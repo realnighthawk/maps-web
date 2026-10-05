@@ -64,7 +64,7 @@ enum CarPlayContent {
 
     static func drive(state: DriveState, car: String?, drivetrain: Drivetrain = .gas, live: [String: Reading], speedKmh: Double?,
                       signedIn: Bool, streaming: Bool, pending: Int) -> CarPlayDrive {
-        let title = car ?? "AutoTelemetry"
+        let title = car ?? "Garage"
         let upload = !signedIn ? "Off" : streaming ? "On" : "Paused"
 
         switch state {

@@ -49,7 +49,7 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
-        INFOPLIST_KEY_CFBundleDisplayName: AutoTelemetry
+        INFOPLIST_KEY_CFBundleDisplayName: Garage
         INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Shows you on the map, plans routes from where you are and records where each drive goes.
         INFOPLIST_KEY_NSMotionUsageDescription: Records how the car moves (braking, cornering, air pressure) with each drive.
         INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription: Connects to your OBD adapter to read live data from your car.

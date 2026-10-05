@@ -14,6 +14,7 @@ final class AppModel {
     let location = LocationService()
     let ble = BleAdapters()
     let sync: SyncService
+    let carRemoval: CarRemoval
     let drive: DriveController
     let plan: PlanModel
     /// The drive shown on the map for review (picked from search). One thing on the map at a time.
@@ -25,6 +26,7 @@ final class AppModel {
         let auth = self.auth, location = self.location, prefs = self.prefs
         let sync = SyncService(context: context, auth: auth, prefs: prefs)
         self.sync = sync
+        carRemoval = CarRemoval(auth: auth)
         let drive = DriveController(context: context, location: location, owner: { auth.ownerId }, sync: { Task { await sync.sync() } })
         self.drive = drive
         plan = PlanModel(

@@ -23,7 +23,7 @@ final class CarPlayController {
 
     private let model = AppModel.shared
     private var interface: CPInterfaceController?
-    private let driveTemplate = CPInformationTemplate(title: "AutoTelemetry", layout: .leading, items: [], actions: [])
+    private let driveTemplate = CPInformationTemplate(title: "Garage", layout: .leading, items: [], actions: [])
     private let drivesTemplate = CPListTemplate(title: "Drives", sections: [])
     private let planTemplate = CPListTemplate(title: "Plan", sections: [])
     private weak var scene: CPTemplateApplicationScene?

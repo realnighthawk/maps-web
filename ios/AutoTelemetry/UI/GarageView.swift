@@ -49,10 +49,16 @@ struct GarageView: View {
                 }
             }
             .sheet(isPresented: $adding) { AddVehicleSheet() }
+            // Deletes that did not reach the server last time (offline, signed out) go through now.
+            .task { await model.carRemoval.flush() }
             .confirmationDialog("Remove \(removing?.displayName ?? "car")?", isPresented: .constant(removing != nil),
                                 titleVisibility: .visible) {
                 Button("Remove", role: .destructive) {
-                    if let v = removing { context.delete(v); try? context.save() }
+                    if let v = removing {
+                        model.carRemoval.queue(id: v.id, vin: v.vin)
+                        context.delete(v)
+                        try? context.save()
+                    }
                     removing = nil
                 }
                 Button("Keep", role: .cancel) { removing = nil }
@@ -182,6 +188,7 @@ struct AddVehicleSheet: View {
 
     private func save(_ m: VehicleMetadata) {
         guard let owner = model.auth.ownerId else { return }
+        model.carRemoval.cancel(vin: m.vin)
         context.insert(Vehicle(vin: m.vin, make: m.make, model: m.model, year: m.year, fuelType: m.fuelType,
                                electrificationLevel: m.electrificationLevel, isEv: m.isEv,
                                nickname: nickname.isEmpty ? nil : nickname, ownerId: owner))

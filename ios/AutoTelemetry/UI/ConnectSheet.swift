@@ -36,7 +36,7 @@ struct ConnectSheet: View {
                     Section { Text("Turn on Bluetooth in Settings to find your adapter.").foregroundStyle(Tok.muted) }
                 case .unauthorized:
                     Section {
-                        Text("AutoTelemetry needs Bluetooth permission to find your adapter.").foregroundStyle(Tok.muted)
+                        Text("Garage needs Bluetooth permission to find your adapter.").foregroundStyle(Tok.muted)
                         Button("Open Settings") { if let u = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(u) } }
                     }
                 case .unsupported:

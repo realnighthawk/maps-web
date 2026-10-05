@@ -1,12 +1,14 @@
 import { ClerkProvider, SignIn, SignedIn, SignedOut, useAuth } from '@clerk/clerk-react'
-import { useEffect, type ReactNode } from 'react'
+import { useLayoutEffect, type ReactNode } from 'react'
 import { getClerkPublishableKey, isRouterMode } from '../config/mapsEngine'
 import { setTokenGetter } from './token'
 
 /** Hands Clerk's token getter to the API client for as long as the user is signed in. */
 function AuthBridge({ children }: { children: ReactNode }) {
   const { getToken } = useAuth()
-  useEffect(() => {
+  // A layout effect, not a plain one: effects run children first, so with useEffect the first queries (/me,
+  // /fleet/status) fired before the getter was set and went out with no token.
+  useLayoutEffect(() => {
     setTokenGetter(() => getToken())
     return () => setTokenGetter(null)
   }, [getToken])

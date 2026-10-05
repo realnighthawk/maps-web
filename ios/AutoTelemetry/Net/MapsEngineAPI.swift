@@ -98,6 +98,21 @@ struct MapsEngineAPI {
         await call("PUT", "/maps/api/v1/vehicles/\(vin)", token, json: profile) { _ in }
     }
 
+    /// Removes a car from the server: its planner profile (by VIN, when it has one) and its garage entry. A car the
+    /// server never had counts as removed.
+    func removeCar(token: String, id: String, vin: String) async -> Api<Void> {
+        func gone(_ r: Api<Void>) -> Bool {
+            switch r { case .ok: true; case .failed(let code, _): code == "NOT_FOUND"; default: false }
+        }
+        let enc = { (s: String) in s.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? s }
+        if !vin.isEmpty {
+            let r = await call("DELETE", "/maps/api/v1/vehicles/\(enc(vin))", token) { _ in }
+            if !gone(r) { return r }
+        }
+        let g = await call("DELETE", "/maps/api/v1/garage/vehicles/\(enc(id))", token) { _ in }
+        return gone(g) ? .ok(()) : g
+    }
+
     private func call<T>(_ method: String, _ path: String, _ token: String, json: [String: Any]? = nil,
                          parse: @escaping (String) throws -> T) async -> Api<T> {
         let body = json.flatMap { try? JSONSerialization.data(withJSONObject: $0) }
