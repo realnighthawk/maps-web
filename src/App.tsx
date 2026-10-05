@@ -6,7 +6,6 @@ import { FleetQueryBootstrap } from './components/fleet/FleetQueryBootstrap'
 import { FleetView } from './components/fleet/FleetView'
 import { VehicleDetailSheet } from './components/fleet/VehicleDetailSheet'
 import { TripsView } from './components/trips/TripsView'
-import { DrivesView } from './components/drives/DrivesView'
 import { SettingsView } from './components/settings/SettingsView'
 import { BottomNav } from './components/shared/BottomNav'
 import { ErrorBanner } from './components/shared/ErrorBanner'
@@ -65,7 +64,6 @@ export default function App() {
                 )}
                 {activeTab === 'fleet' && <FleetView />}
                 {activeTab === 'trips' && <TripsView />}
-                {activeTab === 'drives' && <DrivesView />}
                 {activeTab === 'settings' && <SettingsView />}
               </div>
               {activeTab === 'route' && plan && (

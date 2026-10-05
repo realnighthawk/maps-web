@@ -35,6 +35,10 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
       if (isApiErrorResponse(body)) {
         message = body.error.message || message
         code = body.error.code
+      } else if (body && typeof body === 'object' && typeof (body as { error?: unknown }).error === 'string') {
+        // The router's own errors are {"error":"no_tenant"}.
+        code = (body as { error: string }).error
+        message = code
       }
     } catch {
       // non-JSON error body, use defaults

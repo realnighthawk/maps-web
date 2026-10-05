@@ -18,7 +18,12 @@ export function DriveRow({ drive, vehicle, onSelect }: Props) {
         className="flex w-full items-center justify-between gap-3 rounded-xl border border-slate-200 p-3 text-left transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:hover:border-slate-600 dark:hover:bg-slate-800/60"
       >
         <span className="min-w-0">
-          <span className="block truncate text-sm font-medium text-slate-900 dark:text-slate-100">{when}</span>
+          <span className="block truncate text-sm font-medium text-slate-900 dark:text-slate-100">
+            <span className="mr-2 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">
+              Driven
+            </span>
+            {when}
+          </span>
           <span className="block truncate text-xs text-slate-500 dark:text-slate-400">
             {vehicle}
             {drive.status === 'ACTIVE' ? ' · recording' : ''}

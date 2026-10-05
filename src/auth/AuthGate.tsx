@@ -19,7 +19,17 @@ function AuthBridge({ children }: { children: ReactNode }) {
  * directly), there is no sign-in and the app renders as before.
  */
 export function AuthGate({ children }: { children: ReactNode }) {
-  if (!isRouterMode()) return <>{children}</>
+  if (!isRouterMode()) {
+    // Only a dev server talks to an engine directly. A deployed build must be behind the router and Clerk.
+    if (import.meta.env.PROD) {
+      return (
+        <div className="flex h-screen items-center justify-center bg-slate-100 p-6 text-center text-sm text-slate-600 dark:bg-slate-950 dark:text-slate-300">
+          This build has no VITE_ROUTER_ORIGIN, so it can't sign you in or reach your maps engine.
+        </div>
+      )
+    }
+    return <>{children}</>
+  }
 
   const key = getClerkPublishableKey()
   if (!key) {

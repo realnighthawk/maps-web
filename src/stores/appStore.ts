@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type Tab = 'route' | 'fleet' | 'trips' | 'drives' | 'settings'
+export type Tab = 'route' | 'fleet' | 'trips' | 'settings'
 export type ThemePreference = 'system' | 'light' | 'dark'
 
 interface AppState {

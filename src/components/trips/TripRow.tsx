@@ -48,7 +48,12 @@ export function TripRow({ trip }: TripRowProps) {
         onClick={onReuse}
         className="w-full rounded-xl border border-slate-200 bg-white/90 px-3 py-2.5 text-left transition hover:border-blue-300 hover:bg-blue-50/50 dark:border-slate-700 dark:bg-slate-800/80 dark:hover:border-blue-700 dark:hover:bg-blue-950/30"
       >
-        <div className="text-xs text-slate-500 dark:text-slate-400">{date}</div>
+        <div className="text-xs text-slate-500 dark:text-slate-400">
+          <span className="mr-2 rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
+            Planned
+          </span>
+          {date}
+        </div>
         <div className="mt-0.5 text-left text-sm font-medium leading-snug text-slate-900 dark:text-slate-100">
           <span className="line-clamp-2">{originLabel}</span>
           <span className="mx-1 text-slate-400">→</span>

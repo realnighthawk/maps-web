@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import type { TripFilter } from '../utils/trips'
 
 /** Pseudo sensor id for the speed chart, which comes from the drive's route samples rather than a stored PID. */
 export const SPEED_SERIES = 'speed'
@@ -14,6 +15,9 @@ interface DriveState {
   selectPid: (pid: string) => void
   days: DaysWindow
   setDays: (d: DaysWindow) => void
+  /** Which trips the list shows: those you drove, those you only planned, or both. */
+  filter: TripFilter
+  setFilter: (f: TripFilter) => void
 }
 
 export const useDriveStore = create<DriveState>((set) => ({
@@ -23,4 +27,6 @@ export const useDriveStore = create<DriveState>((set) => ({
   selectPid: (selectedPid) => set({ selectedPid }),
   days: 30,
   setDays: (days) => set({ days }),
+  filter: 'all',
+  setFilter: (filter) => set({ filter }),
 }))

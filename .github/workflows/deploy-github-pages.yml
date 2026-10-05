@@ -25,9 +25,8 @@ jobs:
       - run: npm ci
       - name: Build
         env:
-          VITE_MAPS_ENGINE_ORIGIN: ${{ vars.VITE_MAPS_ENGINE_ORIGIN }}
-          # Router mode: sign in with Clerk and read your own drives through the router (see docs/deployment).
-          VITE_ROUTER_ORIGIN: ${{ vars.VITE_ROUTER_ORIGIN }}
+          # The site is always behind Clerk and the router; set these repo variables to override the defaults.
+          VITE_ROUTER_ORIGIN: ${{ vars.VITE_ROUTER_ORIGIN || 'https://harness-router.nighthawklabs.org' }}
           VITE_CLERK_PUBLISHABLE_KEY: ${{ vars.VITE_CLERK_PUBLISHABLE_KEY }}
           # Optional override. If unset, vite.config uses GITHUB_REPOSITORY → /maps-web/ etc.
           VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH }}

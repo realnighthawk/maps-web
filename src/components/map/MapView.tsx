@@ -54,7 +54,7 @@ export function MapView({ overlay }: MapViewProps) {
           <MapBindings />
           {activeTab === 'route' ? <MapRouteClickHandler /> : null}
           <RoutePolyline />
-          {activeTab === 'drives' ? <DriveTrail /> : null}
+          {activeTab === 'trips' ? <DriveTrail /> : null}
           {activeTab === 'fleet' ? (
             <FleetVehicleMarkers />
           ) : (
